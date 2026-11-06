@@ -745,7 +745,7 @@ var TESTIMONIALS=[
     arcs.push({A:A,B:B,om:om,sp:rnd(.07,.16),off:rnd(0,1),h:Math.min(.38,.1+om*.1)});
   }
   function resize(){
-    dpr=Math.min(devicePixelRatio||1,1.5);W=innerWidth;H=innerHeight;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
+    dpr=Math.min(devicePixelRatio||1,1.5);W=Math.max(innerWidth,1);H=Math.max(innerHeight,1);cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
   }
   function rot(v,ang){
     var c=Math.cos(ang),s=Math.sin(ang),x=v[0]*c+v[2]*s,z=-v[0]*s+v[2]*c,ct=Math.cos(TILT),st=Math.sin(TILT);
@@ -819,13 +819,13 @@ var TESTIMONIALS=[
     }
   }
   function frame(t){
-    var dt=Math.min(.05,(t-last)/1000||.016);last=t;
-    if(!document.hidden)draw(dt);
     requestAnimationFrame(frame);
+    var dt=Math.min(.05,(t-last)/1000||.016);last=t;
+    if(!document.hidden){try{draw(dt)}catch(e){}}
   }
-  addEventListener('resize',function(){resize();if(reduce)draw(.016)});
+  addEventListener('resize',function(){resize();if(reduce)try{draw(.016)}catch(e){}});
   resize();
-  if(reduce){draw(.016);return}
+  if(reduce){try{draw(.016)}catch(e){}return}
   requestAnimationFrame(frame);
 })();
 

@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<script>if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('js')</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Osama Abdelazim | Senior SOC Engineer</title>
+<meta name="description" content="Osama Abdelazim is a Senior Security Operation Center Engineer in Egypt: SIEM, EDR, incident response, threat hunting, ISO and PCI DSS compliance.">
+<meta property="og:title" content="Osama Abdelazim | Senior SOC Engineer">
+<meta property="og:description" content="Threat detection, incident response and compliance, from Giza, Egypt.">
+<meta property="og:image" content="assets/photo.jpg">
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%2306141B'/%3E%3Ccircle cx='50' cy='50' r='16' fill='%23CCD0CF'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* type: Archivo for headings, IBM Plex Sans for everything else */
+:root{--head:Archivo,sans-serif;--ui:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif}
+/* Midnight Navy: #06141B  #11212D  #253745  #4A5C6A  #9BA8AB  #CCD0CF */
+:root{
+  --paper:#CCD0CF; --panel:#B9C0C0; --ink:#06141B; --soft:#425463; --rule:#9BA8AB; --signal:#0A5C9E; --on-signal:#EAF4FF;
+  --console:#06141B; --console-text:#CCD0CF; --console-dim:#9BA8AB;
+  --sev-high:#FF5A44; --sev-med:#F2B544; --sev-low:#6EA8FF; --ok:#5FD18C;
+  --a-soc:#06141B; --a-intel:#253745; --a-network:#4A5C6A; --a-foundations:#9BA8AB; --a-itsm:#CCD0CF;
+  /* liquid glass */
+  --glass:rgba(255,255,255,.42); --glass-strong:rgba(255,255,255,.62); --glass-edge:rgba(255,255,255,.7); --glass-shade:rgba(6,20,27,.14);
+  --orb1:rgba(74,92,106,.34); --orb2:rgba(120,190,192,.42); --orb3:rgba(37,55,69,.22);
+}
+:root[data-theme="dark"]{
+  --paper:#06141B; --panel:#11212D; --ink:#CCD0CF; --soft:#9BA8AB; --rule:#253745; --signal:#4DB6FF; --on-signal:#06141B;
+  --console:#11212D; --console-text:#CCD0CF; --console-dim:#9BA8AB;
+  --a-soc:#CCD0CF; --a-intel:#9BA8AB; --a-network:#4A5C6A; --a-foundations:#253745; --a-itsm:#11212D;
+  --glass:rgba(204,208,207,.06); --glass-strong:rgba(204,208,207,.12); --glass-edge:rgba(204,208,207,.2); --glass-shade:rgba(0,0,0,.4);
+  --orb1:rgba(74,92,106,.42); --orb2:rgba(20,96,108,.75); --orb3:rgba(48,200,196,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+
+/* background the glass refracts */
+
+
+/* liquid glass surface: blur + saturation, bright top edge, soft inner glow, drop shadow */
+.glass,.bar,.queue,.btn,.key div,form,.portrait img{
+  -webkit-backdrop-filter:blur(18px) saturate(1.7);backdrop-filter:blur(18px) saturate(1.7)}
+html{scroll-behavior:smooth;scroll-padding-top:60px}
+body{background:var(--paper);color:var(--ink);font-family:var(--ui);font-size:1rem;line-height:1.65;-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
+a{color:inherit}
+.sans{font-family:var(--ui)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:50;font-family:var(--ui);font-size:.95rem;
+  background:var(--glass);border-bottom:1px solid var(--glass-edge);
+  box-shadow:inset 0 1px 0 var(--glass-edge),0 8px 30px -12px var(--glass-shade)}
+.bar .wrap{display:flex;justify-content:space-between;align-items:center;height:56px;gap:16px}
+.bar b{font-weight:800;font-stretch:80%;letter-spacing:.01em;font-size:1.05rem}
+.bar nav{display:flex;gap:6px;align-items:center}
+.bar nav a{position:relative;overflow:hidden;isolation:isolate;text-decoration:none;color:var(--soft);padding:7px 16px;border-radius:999px;border:1px solid transparent;
+  transition:color .2s,background .25s,border-color .25s,transform .2s,box-shadow .25s}
+.bar nav a::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.5) 50%,transparent 65%);transform:translateX(-120%);transition:transform .6s ease}
+.bar nav a:hover{color:var(--ink);background:var(--glass);border-color:var(--glass-edge);transform:translateY(-1px);box-shadow:inset 0 1px 0 var(--glass-edge),0 8px 18px -10px var(--glass-shade)}
+.bar nav a:hover::after{transform:translateX(120%)}
+.bar nav a:active{transform:translateY(1px) scale(.95)}
+/* Day and night switch: a pill with a sliding round knob, sun on the day side and moon on the night side. */
+.theme-switch{width:68px;height:34px;padding:0;flex:none;margin-left:10px;border:none;border-radius:999px;background:none;cursor:pointer}
+.theme-switch .track{position:relative;display:block;width:100%;height:100%;border-radius:999px;background:linear-gradient(180deg,#9BA8AB 0%,#CCD0CF 100%);
+  box-shadow:inset 0 2px 5px rgba(6,20,27,.3),inset 0 -1px 0 #fff,0 0 0 1px rgba(6,20,27,.18);transition:background .45s,box-shadow .45s}
+.theme-switch .icon{position:absolute;top:8px;width:18px;height:18px;transition:opacity .3s,transform .5s cubic-bezier(.34,1.56,.64,1)}
+.theme-switch .sun{left:9px;color:#06141B}
+.theme-switch .moon{right:9px;color:#CCD0CF;opacity:0;transform:rotate(-70deg) scale(.5)}
+.theme-switch .knob{position:absolute;top:4px;left:4px;width:26px;height:26px;border-radius:50%;transform:translateX(34px);background-color:#06141B;
+  background-image:radial-gradient(rgba(255,255,255,.16) 1px,transparent 1.4px),radial-gradient(circle at 30% 25%,#4A5C6A,#06141B 72%);background-size:4px 4px,100% 100%;
+  box-shadow:0 2px 5px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.25);transition:transform .55s cubic-bezier(.34,1.56,.64,1),background .45s,width .15s}
+.theme-switch:active .knob{width:31px}
+:root[data-theme="dark"] .theme-switch .track{background:linear-gradient(180deg,#06141B 0%,#11212D 100%);box-shadow:inset 0 2px 6px rgba(0,0,0,.8),0 0 0 1px rgba(77,182,255,.4)}
+:root[data-theme="dark"] .theme-switch .sun{opacity:0;transform:rotate(90deg) scale(.5)}
+:root[data-theme="dark"] .theme-switch .moon{opacity:1;transform:none}
+:root[data-theme="dark"] .theme-switch .knob{transform:translateX(0);background-color:#CCD0CF;background-image:radial-gradient(circle at 30% 25%,#CCD0CF,#9BA8AB 80%);background-size:100% 100%;box-shadow:0 2px 6px rgba(0,0,0,.6),inset 0 -1px 0 rgba(6,20,27,.15)}
+.links{display:flex;gap:6px;align-items:center}
+.menu-btn{display:none;position:relative;width:42px;height:34px;flex:none;border-radius:999px;cursor:pointer;background:var(--glass);border:1px solid var(--glass-edge);box-shadow:inset 0 1px 0 var(--glass-edge);transition:background .2s,transform .15s}
+.menu-btn:hover{background:var(--glass-strong)}
+.menu-btn:active{transform:scale(.92)}
+.menu-btn span{position:absolute;left:12px;right:12px;height:2px;border-radius:2px;background:var(--ink);transition:transform .35s cubic-bezier(.3,1.4,.5,1),top .35s}
+.menu-btn span:nth-child(1){top:11px}
+.menu-btn span:nth-child(2){top:19px}
+.bar.open .menu-btn span:nth-child(1){top:15px;transform:rotate(45deg)}
+.bar.open .menu-btn span:nth-child(2){top:15px;transform:rotate(-45deg)}
+@media(max-width:700px){
+  .bar nav{gap:10px}
+  .theme-switch{margin-left:0}
+  .menu-btn{display:block}
+  .links{position:absolute;top:calc(100% + 8px);left:16px;right:16px;flex-direction:column;align-items:stretch;gap:4px;padding:12px;border-radius:24px;
+    background:var(--paper);background:color-mix(in srgb,var(--paper) 97%,transparent);border:1px solid var(--glass-edge);
+    -webkit-backdrop-filter:blur(22px) saturate(1.7);backdrop-filter:blur(22px) saturate(1.7);box-shadow:inset 0 1px 0 var(--glass-edge),0 30px 60px -20px rgba(0,0,0,.45);
+    opacity:0;visibility:hidden;transform:translateY(-10px) scale(.98);transform-origin:top right;transition:opacity .25s,transform .35s cubic-bezier(.3,1.3,.5,1),visibility 0s .35s}
+  .bar.open .links{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+  .bar nav .links a{padding:13px 18px;font-size:1.05rem}
+}
+
+/* hero */
+.hero{padding:72px 0 88px}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:end}
+h1{font-family:var(--ui);font-weight:900;font-stretch:62%;font-size:clamp(4.4rem,13vw,10.5rem);line-height:.84;letter-spacing:-.015em;text-transform:none}
+h1 span{display:block}
+.role{font-family:var(--ui);font-weight:600;font-size:1.2rem;margin:30px 0 14px}
+.role small{display:block;font-weight:400;color:var(--soft);font-size:.98rem;margin-top:2px}
+.lead{max-width:44ch;color:var(--soft)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;font-family:var(--ui)}
+.btn{display:inline-block;padding:13px 26px;border:1px solid var(--glass-edge);text-decoration:none;font-weight:600;font-size:.98rem;border-radius:999px;background:var(--glass);color:var(--ink);cursor:pointer;font-family:inherit;
+  box-shadow:inset 0 1px 0 var(--glass-edge),inset 0 -8px 16px -10px var(--glass-shade),0 10px 24px -12px var(--glass-shade);transition:background .2s,transform .2s}
+.btn:hover{background:var(--glass-strong);transform:translateY(-1px)}
+.btn.main{background:var(--signal);background:linear-gradient(180deg,color-mix(in srgb,var(--signal) 82%,#fff),var(--signal));border-color:color-mix(in srgb,var(--signal) 60%,#fff);color:var(--on-signal);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -8px 16px -8px rgba(0,0,0,.25),0 12px 28px -12px var(--signal)}
+.btn.main:hover{filter:brightness(1.08);background:linear-gradient(180deg,color-mix(in srgb,var(--signal) 82%,#fff),var(--signal));color:var(--on-signal)}
+
+/* alert queue */
+.queue{background:var(--console);background:color-mix(in srgb,var(--console) 92%,transparent);color:var(--console-text);border-radius:22px;border:1px solid rgba(255,255,255,.18);font-family:'IBM Plex Mono',monospace;font-size:.82rem;overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 0 40px rgba(255,255,255,.04),0 30px 60px -24px rgba(6,20,27,.55)}
+.qhead{display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(204,208,207,.16);color:var(--console-dim)}
+.qrow{display:grid;grid-template-columns:70px 1fr auto;gap:12px;padding:15px 16px;border-bottom:1px solid rgba(204,208,207,.08);align-items:start;line-height:1.45}
+.qrow:last-of-type{border-bottom:0}
+.sev{display:flex;align-items:center;gap:7px}
+.sev::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+.sev.high{color:var(--sev-high)}.sev.med{color:var(--sev-med)}.sev.low{color:var(--sev-low)}.sev.me{color:var(--ok)}
+.qstate{color:var(--console-dim);white-space:nowrap;transition:color .3s}
+.qstate.done{color:var(--ok)}
+.qrow.me .qtxt{color:#fff;font-family:var(--ui);font-size:1rem;font-weight:600;line-height:1.3}
+.qrow[hidden]{display:none}
+.qfoot{padding:11px 16px;border-top:1px solid rgba(204,208,207,.16);color:var(--console-dim);font-size:.74rem}
+.pending{opacity:0}
+.qrow{transition:opacity .35s}
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr;gap:44px;align-items:start}.qrow{grid-template-columns:62px 1fr}.qstate{grid-column:2}}
+
+/* sections */
+section{padding:84px 0;border-top:1px solid var(--rule)}
+h2{font-family:var(--ui);font-weight:800;font-stretch:75%;font-size:clamp(2.2rem,5vw,3.3rem);line-height:1;letter-spacing:-.01em;margin-bottom:36px}
+.cols{display:grid;grid-template-columns:240px 1fr;gap:56px}
+@media(max-width:860px){.cols{grid-template-columns:1fr;gap:20px}}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:56px;align-items:start}
+.about-grid p{margin-bottom:1.1em;max-width:56ch}
+.about-grid p.big{font-size:1.4rem;line-height:1.45;font-weight:600}
+.portrait img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 20%;display:block;border-radius:28px;border:1px solid var(--glass-edge);padding:8px;background:var(--glass);
+  box-shadow:inset 0 1px 0 var(--glass-edge),0 24px 50px -24px var(--glass-shade)}
+.portrait figcaption{font-family:var(--ui);font-size:.85rem;color:var(--soft);margin-top:10px}
+@media(max-width:860px){.about-grid{grid-template-columns:1fr}.portrait{max-width:360px}}
+
+/* ledger */
+.ledger{border-top:2px solid var(--ink)}
+.row{display:grid;grid-template-columns:200px 1fr;gap:32px;padding:26px 0;border-bottom:1px solid var(--rule)}
+.when{font-family:var(--ui);font-size:.92rem;color:var(--soft);font-variant-numeric:tabular-nums}
+.row h3{font-family:var(--ui);font-weight:700;font-size:1.3rem;line-height:1.2}
+.org{font-family:var(--ui);color:var(--soft);font-size:.98rem;margin:2px 0 12px}
+.row ul{list-style:none;max-width:62ch}
+.row li{padding-left:18px;position:relative;margin:.45em 0;font-size:1rem}
+.row li::before{content:"";position:absolute;left:0;top:.72em;width:7px;height:2px;background:var(--signal)}
+.row li b{font-family:var(--ui);font-weight:700;font-size:.97rem}
+details summary{cursor:pointer;font-family:var(--ui);font-size:.92rem;font-weight:600;margin-top:10px;list-style:none;width:max-content;border-bottom:1.5px solid var(--ink)}
+details summary::-webkit-details-marker{display:none}
+details[open] summary{margin-bottom:10px}
+@media(max-width:700px){.row{grid-template-columns:1fr;gap:6px}}
+
+/* capabilities */
+.caps{border-top:2px solid var(--ink)}
+.cap{display:grid;grid-template-columns:260px 1fr;gap:32px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.cap h3{font-family:var(--ui);font-weight:700;font-size:1.2rem}
+.cap p{max-width:60ch}
+.cap .tools{font-family:var(--ui);font-size:.9rem;color:var(--soft);margin-top:6px}
+.cap.soon h3,.cap.soon p{color:var(--soft)}
+@media(max-width:700px){.cap{grid-template-columns:1fr;gap:4px}}
+
+/* certifications */
+.cfilters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.cfilters button{font:inherit;font-family:var(--ui);font-size:.92rem;color:var(--ink);cursor:pointer;padding:8px 18px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-edge);
+  -webkit-backdrop-filter:blur(18px) saturate(1.7);backdrop-filter:blur(18px) saturate(1.7);box-shadow:inset 0 1px 0 var(--glass-edge);transition:background .2s,color .2s,transform .15s}
+.cfilters button:hover{background:var(--glass-strong)}
+.cfilters button:active{transform:scale(.94)}
+.cfilters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink);font-weight:600}
+.ccount{font-family:var(--ui);font-size:.9rem;color:var(--soft);margin-bottom:22px}
+.cgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.cert{--a:var(--a-soc);grid-column:span 3;position:relative;display:flex;flex-direction:column;gap:4px;padding:20px 22px 22px;border-radius:22px;overflow:hidden;font-family:var(--ui);
+  background:var(--glass);border:1px solid var(--glass-edge);-webkit-backdrop-filter:blur(18px) saturate(1.7);backdrop-filter:blur(18px) saturate(1.7);
+  box-shadow:inset 0 1px 0 var(--glass-edge),0 18px 40px -24px var(--glass-shade);transition:opacity .35s,transform .35s,filter .35s}
+.cert::before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:3px;border-radius:0 3px 3px 0;background:var(--a)}
+.cert .area{display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--soft)}
+.cert .area::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--a);box-shadow:0 0 0 1px var(--soft)}
+.cert h3{font-weight:700;font-size:1.02rem;line-height:1.25;margin-top:8px}
+.cert .issuer{color:var(--soft);font-size:.9rem;margin-top:auto;padding-top:10px}
+.cert.top{grid-column:span 6;min-height:170px;padding:26px 30px 28px}
+.cert.top h3{font-weight:800;font-stretch:75%;font-size:clamp(1.7rem,3vw,2.2rem);line-height:1.05}
+.cert.top::after{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,var(--a),transparent 70%);opacity:.22;pointer-events:none}
+.cert.feature{grid-column:span 12;min-height:150px}
+.cert.feature h3{font-size:clamp(1.9rem,3.6vw,2.7rem)}
+.cert.dim{opacity:.22;transform:scale(.97);filter:saturate(.4);pointer-events:none}
+.cert[data-area="foundations"]{--a:var(--a-foundations)}
+.cert[data-area="network"]{--a:var(--a-network)}
+.cert[data-area="soc"]{--a:var(--a-soc)}
+.cert[data-area="intel"]{--a:var(--a-intel)}
+.cert[data-area="itsm"]{--a:var(--a-itsm)}
+@media(max-width:1000px){.cert{grid-column:span 6}.cert.feature{grid-column:span 12}}
+@media(max-width:640px){.cert,.cert.top{grid-column:span 12}.cert.top{min-height:0}}
+@media print{.cfilters,.ccount{display:none!important}.cert.dim{opacity:1;transform:none;filter:none}.cert{grid-column:span 4!important;padding:8px 10px;border:1px solid #bbb}.cert.top{min-height:0}.cert.top::after,.cert::before{display:none}}
+
+/* contact */
+.mail{font-family:var(--ui);font-weight:800;font-stretch:75%;font-size:clamp(1.3rem,5.2vw,3.4rem);line-height:1.1;word-break:break-all;text-decoration:none;border-bottom:3px solid var(--signal)}
+.mail:hover{background:var(--signal);color:var(--on-signal)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:44px}
+.contact-grid dl{font-family:var(--ui)}
+.contact-grid dt{color:var(--soft);font-size:.88rem;margin-top:16px}
+.contact-grid dd{font-size:1.05rem;font-weight:600}
+form{display:grid;gap:16px;font-family:var(--ui);padding:28px;border-radius:26px;background:var(--glass);border:1px solid var(--glass-edge);
+  box-shadow:inset 0 1px 0 var(--glass-edge),0 24px 50px -24px var(--glass-shade)}
+label{display:grid;gap:6px;font-size:.92rem;font-weight:600}
+input,textarea{font:inherit;font-weight:400;background:var(--glass);color:var(--ink);border:1px solid var(--glass-edge);border-radius:14px;padding:12px 14px;outline:none;box-shadow:inset 0 2px 6px var(--glass-shade)}
+input:focus,textarea:focus{border-color:var(--signal)}
+textarea{min-height:130px;resize:vertical}
+.hp{position:absolute;left:-9999px}
+.note{font-size:.88rem;color:var(--soft)}
+@media(max-width:860px){.contact-grid{grid-template-columns:1fr;gap:36px}}
+
+footer{border-top:1px solid var(--rule);padding:28px 0;font-family:var(--ui);font-size:.9rem;color:var(--soft)}
+footer .fwrap{display:flex;justify-content:space-between;align-items:center;gap:14px 24px;flex-wrap:wrap}
+.fmenu{display:flex;flex-wrap:wrap;gap:4px}
+.fcopy{flex-basis:100%;padding-top:14px;border-top:1px solid var(--rule);font-size:.88rem}
+.fl{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;color:var(--soft);text-decoration:none;border:1px solid transparent;transition:color .2s,background .25s,border-color .25s,transform .2s}
+.fl svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.fl:hover{color:var(--ink);background:var(--glass);border-color:var(--glass-edge);transform:translateY(-1px)}
+.fl:hover svg{color:var(--signal)}
+.fl:active{transform:translateY(1px) scale(.96)}
+/* button effects: a light sweep on hover, a press-down on click */
+.btn{position:relative;overflow:hidden;isolation:isolate}
+.btn::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-120%);transition:transform .7s ease}
+.btn:hover::after{transform:translateX(120%)}
+.btn:active{transform:translateY(1px) scale(.97)}
+
+/* replay */
+.replay{font:inherit;font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--console-text);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:2px 12px;cursor:pointer;transition:background .2s,transform .2s}
+.replay:hover{background:rgba(255,255,255,.16)}
+.replay:active{transform:scale(.94)}
+.replay:disabled{opacity:.45;cursor:default}
+.qhead{align-items:center}
+
+/* currently strip */
+.now{padding:0 0 72px}
+.now .wrap>div{display:grid;grid-template-columns:repeat(3,1fr);border-radius:22px;background:var(--glass);border:1px solid var(--glass-edge);
+  -webkit-backdrop-filter:blur(18px) saturate(1.7);backdrop-filter:blur(18px) saturate(1.7);box-shadow:inset 0 1px 0 var(--glass-edge),0 18px 40px -22px var(--glass-shade)}
+.now dl{padding:20px 26px;font-family:var(--ui)}
+.now dl+dl{border-left:1px solid var(--glass-edge)}
+.now dt{font-size:.85rem;color:var(--soft)}
+.now dd{font-size:1.05rem;font-weight:700;line-height:1.3}
+.live{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--signal);margin-right:8px;animation:ping 2.2s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(77,182,255,.6)}80%,100%{box-shadow:0 0 0 9px rgba(77,182,255,0)}}
+@media(max-width:800px){.now .wrap>div{grid-template-columns:1fr}.now dl+dl{border-left:0;border-top:1px solid var(--glass-edge)}}
+
+/* tools */
+.tools-block{margin-top:56px}
+.tools-block h3{font-family:var(--ui);font-weight:800;font-stretch:75%;font-size:1.7rem;margin-bottom:18px}
+.stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 40px;border-top:2px solid var(--ink)}
+.stack div{padding:18px 0;border-bottom:1px solid var(--rule);font-family:var(--ui)}
+.stack b{display:block;font-size:.92rem;margin-bottom:4px}
+.stack span{color:var(--soft);font-size:.95rem}
+
+/* highlights and testimonials: hidden until filled in the script */
+.hl{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 40px;border-top:2px solid var(--ink)}
+.hl div{padding:22px 0;border-bottom:1px solid var(--rule)}
+.hl b{display:block;font-family:var(--ui);font-weight:900;font-stretch:70%;font-size:3rem;line-height:1}
+.hl span{font-family:var(--ui);color:var(--soft);font-size:.95rem}
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.quotes blockquote{padding:26px;border-radius:22px;background:var(--glass);border:1px solid var(--glass-edge);
+  -webkit-backdrop-filter:blur(18px) saturate(1.7);backdrop-filter:blur(18px) saturate(1.7);box-shadow:inset 0 1px 0 var(--glass-edge)}
+.quotes p{font-size:1.12rem;line-height:1.55}
+.quotes cite{display:block;margin-top:14px;font-family:var(--ui);font-style:normal;font-size:.92rem;color:var(--soft)}
+
+/* nav highlight and back to top */
+.bar nav a[aria-current="true"]{color:var(--paper);background:var(--ink);border-color:var(--ink);font-weight:600;box-shadow:0 8px 18px -10px var(--ink)}
+.bar nav a[aria-current="true"]::after{display:none}
+.totop{position:fixed;right:22px;bottom:22px;z-index:40;width:46px;height:46px;border-radius:50%;font:inherit;font-size:1.2rem;color:var(--ink);cursor:pointer;background:var(--glass);border:1px solid var(--glass-edge);
+  -webkit-backdrop-filter:blur(18px) saturate(1.7);backdrop-filter:blur(18px) saturate(1.7);box-shadow:inset 0 1px 0 var(--glass-edge),0 12px 28px -12px var(--glass-shade);
+  opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .25s,transform .25s}
+.totop.show{opacity:1;transform:none;pointer-events:auto}
+.totop:active{transform:scale(.92)}
+
+/* print: a clean one-column CV */
+@media print{
+  body::before,.bar,.now,.queue,.actions,.totop,form,.replay,footer .wrap a,.caps .soon{display:none!important}
+  :root,:root[data-theme="dark"]{--paper:#fff;--ink:#000;--soft:#333;--rule:#999;--glass:transparent;--glass-edge:#bbb;--glass-shade:transparent}
+  body{background:#fff;color:#000;font-size:10.5pt}
+  *{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important;animation:none!important}
+  .hero{padding:0 0 12px}.hero .wrap{grid-template-columns:1fr}
+  h1{font-size:44pt}
+  section{padding:18px 0;break-inside:avoid-page}
+  h2{font-size:20pt;margin-bottom:10px}
+  .portrait{display:none}.about-grid{grid-template-columns:1fr}
+  .row,.cap{padding:10px 0;break-inside:avoid}
+  .mail{font-size:14pt;border:0}.contact-grid{grid-template-columns:1fr;margin-top:12px}
+  a{text-decoration:none}
+}
+/* scroll reveal: only applied when scripts run and motion is allowed */
+@keyframes rise{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:none}}
+.js h1 span{animation:rise 1s cubic-bezier(.2,.7,.2,1) both}
+.js h1 span:nth-child(2){animation-delay:.14s}
+.js .role,.js .lead,.js .actions{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+.js .role{animation-delay:.3s}.js .lead{animation-delay:.42s}.js .actions{animation-delay:.56s}
+/* scroll progress along the bottom of the nav */
+.bar::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--signal);transform:scaleX(var(--p,0));transform-origin:left}
+@media print{.sc{opacity:1!important;transform:none!important;filter:none!important}.bar::after{display:none}}
+/* scroll-scrubbed text, as on pryzm.design: blocks start dim and brighten as they scroll up the screen */
+.js .sc{opacity:calc(.1 + .9*var(--p,0));transform:translate3d(0,calc((1 - var(--p,0))*26px),0)}
+.js h2.sc{filter:blur(calc((1 - var(--p,0))*7px))}
+.js .cert.sc{transition:none}
+.cert.dim{opacity:calc(.22*(.1 + .9*var(--p,1)))!important;transform:translate3d(0,calc((1 - var(--p,1))*26px),0) scale(.97)!important}
+.mail{display:inline-block}
+.hero{position:relative;overflow:hidden}
+.hero .wrap{position:relative;z-index:1}
+.js h1{transform:translate3d(0,calc(min(var(--sy,0),800)*.14px),0)}
+
+
+
+/* smooth scroll (Lenis) */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+/* vendor marks on the certification tiles */
+.cert .issuer{display:flex;align-items:center;gap:9px}
+.vlogo{width:28px;height:28px;flex:none;object-fit:contain}
+:root[data-theme="dark"] .vlogo{filter:invert(.82)}
+.vmono{flex:none;display:inline-grid;place-items:center;width:22px;height:22px;border-radius:7px;border:1px solid var(--soft);color:var(--ink);font:700 .6rem/1 var(--ui);font-style:normal;letter-spacing:.02em}
+.cert.top .vlogo{width:38px;height:38px}.cert.top .vmono{width:30px;height:30px}
+.cert.top .vmono{font-size:.78rem;border-radius:9px}
+.cert.top .issuer{gap:11px;font-size:.98rem}
+/* data tunnel: numbers and light specks streaming past, drawn live in a canvas */
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+@media print{#bg{display:none}}
+/* headings keep Archivo */
+body h1,body h2,body h3,body .mail,body .bar b,body .hl b{font-family:var(--head)!important}
+
+/* section header icons: line icon in a glass badge */
+section h2{display:flex;align-items:center;gap:clamp(12px,2vw,20px)}
+.hi{flex:none;display:inline-grid;place-items:center;width:clamp(44px,5vw,58px);aspect-ratio:1;border-radius:18px;color:var(--signal);background:var(--glass);border:1px solid var(--glass-edge);
+  -webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6);box-shadow:inset 0 1px 0 var(--glass-edge),0 10px 24px -14px var(--glass-shade)}
+.hi svg{width:52%;height:52%;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tools-block h3{display:flex;align-items:center;gap:12px}
+.tools-block h3 .hi{width:38px;border-radius:12px}
+:focus-visible{outline:3px solid var(--signal);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+/* browsers without backdrop-filter get a more opaque surface so text stays readable */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  :root{--glass:rgba(255,255,255,.85)}:root[data-theme="dark"]{--glass:rgba(17,33,45,.92)}}
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+
+<div class="bar">
+  <div class="wrap">
+    <b>Osama Abdelazim</b>
+    <nav>
+      <div class="links" id="links">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button id="themeBtn" type="button" class="theme-switch" role="switch" aria-checked="false" aria-label="Night view" title="Switch to night view">
+        <span class="track">
+          <svg class="icon sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+            <g stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+              <line x1="12" y1="2.4" x2="12" y2="4.8"/><line x1="12" y1="19.2" x2="12" y2="21.6"/>
+              <line x1="2.4" y1="12" x2="4.8" y2="12"/><line x1="19.2" y1="12" x2="21.6" y2="12"/>
+              <line x1="5.2" y1="5.2" x2="6.9" y2="6.9"/><line x1="17.1" y1="17.1" x2="18.8" y2="18.8"/>
+              <line x1="5.2" y1="18.8" x2="6.9" y2="17.1"/><line x1="17.1" y1="6.9" x2="18.8" y2="5.2"/>
+            </g>
+          </svg>
+          <svg class="icon moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M10.2 3.2a8.8 8.8 0 1 0 10.6 10.6A7.2 7.2 0 0 1 10.2 3.2Z"/>
+            <path fill="currentColor" d="M18.6 3.4l.6 1.6 1.6.6-1.6.6-.6 1.6-.6-1.6-1.6-.6 1.6-.6Z"/>
+          </svg>
+          <span class="knob"></span>
+        </span>
+      </button>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="links"><span></span><span></span></button>
+    </nav>
+  </div>
+</div>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <h1><span>Osama</span><span>Abdelazim</span></h1>
+      <p class="role">Senior Security Operation Center Engineer<small>Raya Data Center, Giza, Egypt</small></p>
+      <p class="lead">I triage alerts, contain incidents and keep the records audit-ready. Four-plus years in security operations and compliance, across SIEM, EDR and firewalls.</p>
+      <div class="actions">
+        <a class="btn main" href="#contact">Work with me</a>
+        <a class="btn" href="assets/Osama-Abdelazim-CV.pdf" download>Download CV</a>
+      </div>
+    </div>
+
+    <div class="queue" role="img" aria-label="Illustrative alert queue. Three alerts are triaged and closed, then a final entry reads: Osama Abdelazim, Senior SOC Engineer, available.">
+      <div class="qhead"><span>Alert queue</span><button class="replay" id="replay" type="button">Replay</button><span id="qcount">4 open</span></div>
+      <div class="qrow" data-state="Contained">
+        <span class="sev high">High</span>
+        <span class="qtxt">Repeated failed logins, then a success from a new IP</span>
+        <span class="qstate done">Contained</span>
+      </div>
+      <div class="qrow" data-state="Closed, benign">
+        <span class="sev med">Medium</span>
+        <span class="qtxt">Outbound traffic to a flagged domain</span>
+        <span class="qstate done">Closed, benign</span>
+      </div>
+      <div class="qrow" data-state="Closed">
+        <span class="sev low">Low</span>
+        <span class="qtxt">Endpoint agent offline</span>
+        <span class="qstate done">Closed</span>
+      </div>
+      <div class="qrow me" data-state="Available">
+        <span class="sev me">Open</span>
+        <span class="qtxt">Osama Abdelazim, Senior SOC Engineer</span>
+        <span class="qstate done">Available</span>
+      </div>
+      <div class="qfoot">Illustrative queue, not real incident data.</div>
+    </div>
+  </div>
+</header>
+
+<div class="now">
+  <div class="wrap">
+    <div>
+      <dl><dt>Now</dt><dd>Senior Information Security Engineer, Raya Data Center</dd></dl>
+      <dl><dt>Based in</dt><dd>6th of October City, Egypt</dd></dl>
+      <dl><dt>Availability</dt><dd><span class="live" aria-hidden="true"></span>Open to new opportunities</dd></dl>
+    </div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <h2><span class="hi" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></span>About</h2>
+      <p class="big">I work the part of security that happens at 3 a.m.: the alert nobody wrote a runbook for.</p>
+      <p>At Raya Data Center I lead detection, triage and incident response across multi-tenant environments, using SIEM and EDR platforms such as Elastic and CrowdStrike. I also keep the security tools tuned, apply threat intelligence, and support ISO 27001 and PCI DSS audit cycles, from gap analysis to closed findings.</p>
+      <p>I started as a SOC trainee and in technical support, and moved up to a senior engineering role. I also teach security as a freelance instructor with Global Brand on the Depi scholarship program. I like mentoring, and I like turning a messy incident into a clear record someone else can learn from.</p>
+    </div>
+    <figure class="portrait">
+      <img src="assets/photo.jpg" alt="Portrait of Osama Abdelazim in a grey suit" width="480" height="600">
+    </figure>
+  </div>
+</section>
+
+<section id="highlights" hidden>
+  <div class="wrap">
+    <h2><span class="hi" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 17l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/></svg></span>Highlights</h2>
+    <div class="hl" id="hl"></div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <h2><span class="hi" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 13h18"/></svg></span>Experience</h2>
+    <div class="ledger">
+      <div class="row">
+        <div class="when">Present</div>
+        <div>
+          <h3>Instructor, freelance</h3>
+          <div class="org">Global Brand (Depi Scholarship)</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="when">March 2025 to now<br>Giza, Egypt</div>
+        <div>
+          <h3>Senior Information Security Engineer</h3>
+          <div class="org">Raya Data Center</div>
+          <ul>
+            <li><b>Monitor and respond.</b> Watch SIEM and IDS/IPS alerts and assess threats as they arrive.</li>
+            <li><b>Manage incidents.</b> Triage by severity and impact, investigate, contain, and document each action.</li>
+            <li><b>Use threat intelligence.</b> Collect and analyze intel, then turn it into stronger defenses.</li>
+            <li><b>Keep tools reliable.</b> Keep detection and security tools updated, correctly configured and performing.</li>
+            <li><b>Stay compliant.</b> Maintain ISO standards, check policy against regulation, and close audit findings with corrective actions.</li>
+            <li><b>Train people.</b> Build and deliver security awareness training.</li>
+            <li><b>Improve the stack.</b> Evaluate and roll out new security technology.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="when">May 2023 to March 2025<br>Cairo, Egypt</div>
+        <div>
+          <h3>Information Security Administrator</h3>
+          <div class="org">Raya Data Center</div>
+          <ul>
+            <li>Monitored SIEM and IDS/IPS alerts, then triaged, investigated, contained and documented incidents.</li>
+            <li>Collected threat intelligence, kept security tools current, and supported audits.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="when">March to May 2023<br>Cairo, Egypt</div>
+        <div>
+          <h3>SOC Analyst, trainee</h3>
+          <div class="org">CyberTalents</div>
+          <ul>
+              <li>Identified and responded to network intrusions and unauthorized activity.</li>
+              <li>Monitored traffic and system logs; coordinated investigation and remediation with other teams.</li>
+              <li>Worked with SIEM, firewalls, IDS/IPS and endpoint protection, and recommended risk mitigations.</li>
+            </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="when">October 2022 to February 2023<br>Cairo, Egypt</div>
+        <div>
+          <h3>Technical Support Specialist</h3>
+          <div class="org">Xceed</div>
+          <ul><li>Solved customers' technical problems and supported teammates with their questions.</li></ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="when">May to October 2022<br>Cairo, Egypt</div>
+        <div>
+          <h3>SOC Analyst, trainee</h3>
+          <div class="org">AMIT Learning</div>
+          <ul><li>Completed the Cyber Security Engineer program, SOC track.</li></ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="when">2017 to 2022<br>Gamasa, Egypt</div>
+        <div>
+          <h3>BSc, Telecom Engineering</h3>
+          <div class="org">Delta University</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="capabilities">
+  <div class="wrap">
+    <h2><span class="hi" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.5-3.1 8.1-7.5 9.5-4.4-1.4-7.5-5-7.5-9.5V6z"/><path d="M8.7 12.2l2.3 2.3 4.4-4.6"/></svg></span>Capabilities</h2>
+    <div class="caps">
+      <div class="cap"><h3>Detection and SIEM</h3><div><p>Alert monitoring, triage and tuning across multi-tenant environments, backed by Elastic Security SIEM training.</p><p class="tools">Elastic, vSphere Log Insight</p></div></div>
+      <div class="cap"><h3>Endpoint and network defense</h3><div><p>EDR administration and firewall management to stop threats at the endpoint and the perimeter.</p><p class="tools">CrowdStrike Falcon, Fortinet, IDS/IPS</p></div></div>
+      <div class="cap"><h3>Incident response</h3><div><p>Severity-based triage, investigation, containment, and clear records of what happened and what was done.</p></div></div>
+      <div class="cap"><h3>Threat intelligence and hunting</h3><div><p>Intel collection, OSINT and dark web monitoring.</p><p class="tools">SOCRadar, CyberTalents Certified Threat Hunter</p></div></div>
+      <div class="cap"><h3>Compliance and audit</h3><div><p>ISO 27001, PCI DSS, gap analysis, audit support and corrective actions.</p></div></div>
+      <div class="cap"><h3>Vulnerability management</h3><div><p>Vulnerability assessment and basic penetration testing to find weaknesses first.</p><p class="tools">Nessus</p></div></div>
+      <div class="cap"><h3>Automation and AI</h3><div><p>Scripting and automation, plus AI solutions, for security operations work.</p></div></div>
+      <div class="cap soon"><h3>Projects</h3><div><p>Case studies and lab write-ups will appear here.</p></div></div>
+    </div>
+
+    <div class="tools-block">
+      <h3><span class="hi" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12.5l9 5 9-5M3 16.5l9 5 9-5"/></svg></span>Tools and stack</h3>
+      <div class="stack">
+        <div><b>SIEM and logging</b><span>Elastic Security, VMware vSphere Log Insight</span></div>
+        <div><b>Endpoint (EDR)</b><span>CrowdStrike Falcon</span></div>
+        <div><b>Network security</b><span>Fortinet firewalls, IDS/IPS</span></div>
+        <div><b>Vulnerability scanning</b><span>Nessus</span></div>
+        <div><b>Threat intelligence</b><span>SOCRadar, OSINT, dark web monitoring</span></div>
+        <div><b>Frameworks</b><span>ISO 27001, PCI DSS, ITIL</span></div>
+        <div><b>Automation</b><span>Scripting, AI solutions</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="wrap">
+    <h2><span class="hi" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5.5"/><path d="M8.6 13.6L7.5 21l4.5-2.6 4.5 2.6-1.1-7.4"/></svg></span>Certifications</h2>
+    <div class="cfilters" role="group" aria-label="Filter certifications by area">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="soc" aria-pressed="false">SOC and response</button>
+      <button type="button" data-f="intel" aria-pressed="false">Threat intelligence</button>
+      <button type="button" data-f="network" aria-pressed="false">Network</button>
+      <button type="button" data-f="foundations" aria-pressed="false">Foundations</button>
+      <button type="button" data-f="itsm" aria-pressed="false">Service management</button>
+    </div>
+    <p class="ccount" id="ccount" aria-live="polite">15 credentials</p>
+    <div class="cgrid" id="cgrid">
+      <article class="cert top feature" data-area="intel"><span class="area">Threat intelligence</span><h3>Certified Threat Hunting Professional</h3><span class="issuer"><i class="vmono" aria-hidden="true">IN</i><span>INE</span></span></article>
+      <article class="cert top" data-area="foundations"><span class="area">Security foundations</span><h3>CompTIA Security+</h3><span class="issuer"><img class="vlogo" src="assets/logos/comptia.svg" alt="" width="22" height="22" loading="lazy"><span>CompTIA</span></span></article>
+      <article class="cert top" data-area="network"><span class="area">Network security</span><h3>CCNA Security</h3><span class="issuer"><img class="vlogo" src="assets/logos/cisco.svg" alt="" width="22" height="22" loading="lazy"><span>Cisco</span></span></article>
+      <article class="cert top" data-area="soc"><span class="area">SOC and response</span><h3>Elastic Security Fundamentals: SIEM</h3><span class="issuer"><img class="vlogo" src="assets/logos/elastic.svg" alt="" width="22" height="22" loading="lazy"><span>Elastic</span></span></article>
+      <article class="cert top" data-area="intel"><span class="area">Threat intelligence</span><h3>Certified Threat Hunter</h3><span class="issuer"><i class="vmono" aria-hidden="true">CT</i><span>CyberTalents</span></span></article>
+      <article class="cert" data-area="soc"><span class="area">SOC and response</span><h3>Incident Handler</h3><span class="issuer"><i class="vmono" aria-hidden="true">LD</i><span>LetsDefend</span></span></article>
+      <article class="cert" data-area="soc"><span class="area">SOC and response</span><h3>First Blood</h3><span class="issuer"><i class="vmono" aria-hidden="true">LD</i><span>LetsDefend</span></span></article>
+      <article class="cert" data-area="soc"><span class="area">SOC and response</span><h3>Security Operation Center</h3><span class="issuer"><i class="vmono" aria-hidden="true">CT</i><span>CyberTalents</span></span></article>
+      <article class="cert" data-area="soc"><span class="area">SOC and response</span><h3>Cyber Security Engineer, SOC track</h3><span class="issuer"><i class="vmono" aria-hidden="true">AL</i><span>AMIT Learning</span></span></article>
+      <article class="cert" data-area="intel"><span class="area">Threat intelligence</span><h3>Fundamentals of Dark Web Monitoring</h3><span class="issuer"><i class="vmono" aria-hidden="true">SR</i><span>SOCRadar</span></span></article>
+      <article class="cert" data-area="itsm"><span class="area">Service management</span><h3>ITIL® Foundation</h3><span class="issuer"><i class="vmono" aria-hidden="true">IT</i><span>ITEgypt Corp</span></span></article>
+      <article class="cert" data-area="foundations"><span class="area">Security foundations</span><h3>Cybersecurity Essentials</h3><span class="issuer"><img class="vlogo" src="assets/logos/cisco.svg" alt="" width="22" height="22" loading="lazy"><span>Cisco</span></span></article>
+      <article class="cert" data-area="foundations"><span class="area">Security foundations</span><h3>Introduction to Cybersecurity</h3><span class="issuer"><img class="vlogo" src="assets/logos/cisco.svg" alt="" width="22" height="22" loading="lazy"><span>Cisco</span></span></article>
+      <article class="cert" data-area="foundations"><span class="area">Security foundations</span><h3>Pre Security Learning Path</h3><span class="issuer"><img class="vlogo" src="assets/logos/tryhackme.svg" alt="" width="22" height="22" loading="lazy"><span>TryHackMe</span></span></article>
+      <article class="cert" data-area="network"><span class="area">Network security</span><h3>Introduction to Network Security</h3><span class="issuer"><i class="vmono" aria-hidden="true">MT</i><span>MaharaTech, ITI Mooca</span></span></article>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials" hidden>
+  <div class="wrap">
+    <h2><span class="hi" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 7.5H6.5A1.5 1.5 0 0 0 5 9v4a1.5 1.5 0 0 0 1.5 1.5H9c0 2.2-1 3.5-3 4M19 7.5h-3.5A1.5 1.5 0 0 0 14 9v4a1.5 1.5 0 0 0 1.5 1.5H18c0 2.2-1 3.5-3 4"/></svg></span>What colleagues say</h2>
+    <div class="quotes" id="quotes"></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <h2><span class="hi" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></svg></span>Contact</h2>
+    <a class="mail" href="mailto:osamaabdelazim10120@gmail.com">osamaabdelazim10120@gmail.com</a>
+    <div class="contact-grid">
+      <div>
+        <p style="max-width:40ch">Hiring for a SOC role, or need help with detection, incident response or compliance? Send a message and I will reply within a couple of days.</p>
+        <dl>
+          <dt>Location</dt><dd>6th of October City, Egypt</dd>
+          <dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/osama-abdelazim-0116aa204/" target="_blank" rel="noopener">Osama Abdelazim</a></dd>
+          <dt>Languages</dt><dd>Arabic, English</dd>
+        </dl>
+      </div>
+      <!-- Netlify Forms: works automatically on Netlify. Elsewhere the form opens the visitor's email app instead. -->
+      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="cform" action="/?thanks=1">
+        <input type="hidden" name="form-name" value="contact">
+        <p class="hp"><label>Leave this empty<input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <label>Name<input name="name" required autocomplete="name"></label>
+        <label>Email<input type="email" name="email" required autocomplete="email"></label>
+        <label>Message<textarea name="message" required></textarea></label>
+        <button class="btn main" type="submit">Send message</button>
+        <p class="note" id="fnote" role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
+
+<footer>
+  <div class="wrap fwrap">
+    <nav class="fmenu" aria-label="Footer">
+      <a class="fl" href="#about"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>About</a>
+      <a class="fl" href="#experience"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 13h18"/></svg>Experience</a>
+      <a class="fl" href="#capabilities"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7.5 3v5.5c0 4.5-3.1 8.1-7.5 9.5-4.4-1.4-7.5-5-7.5-9.5V6z"/><path d="M8.7 12.2l2.3 2.3 4.4-4.6"/></svg>Capabilities</a>
+      <a class="fl" href="#certifications"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="5.5"/><path d="M8.6 13.6L7.5 21l4.5-2.6 4.5 2.6-1.1-7.4"/></svg>Certifications</a>
+      <a class="fl" href="#contact"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></svg>Contact</a>
+    </nav>
+    <div class="fmenu">
+      <a class="fl" href="https://www.linkedin.com/in/osama-abdelazim-0116aa204/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 11v5M8 8v.01M12 16v-5m0 2.5a2.5 2.5 0 0 1 5 0V16"/></svg>LinkedIn</a>
+      <a class="fl" href="mailto:osamaabdelazim10120@gmail.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></svg>Email</a>
+      <a class="fl" href="assets/Osama-Abdelazim-CV.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>Download CV</a>
+    </div>
+    <p class="fcopy">© <span id="yr"></span> Osama Abdelazim</p>
+  </div>
+</footer>
+
+<script>
+// theme
+(function(){
+  var root=document.documentElement,btn=document.getElementById('themeBtn'),t=null;
+  try{t=localStorage.getItem('theme')}catch(e){}
+  if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  function apply(v){
+    root.setAttribute('data-theme',v);
+    btn.setAttribute('aria-checked',String(v==='dark')); // on means night view
+    btn.title=v==='dark'?'Switch to day view':'Switch to night view';
+    try{localStorage.setItem('theme',v)}catch(e){}
+  }
+  apply(t);
+  btn.addEventListener('click',function(){t=t==='dark'?'light':'dark';apply(t)});
+})();
+
+// alert queue: runs once on load; the final state is already in the HTML
+(function(){
+  var rows=[].slice.call(document.querySelectorAll('.qrow')),count=document.getElementById('qcount'),btn=document.getElementById('replay'),timers=[];
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){btn.hidden=true;return}
+  function at(ms,fn){timers.push(setTimeout(fn,ms))}
+  function play(){
+    timers.forEach(clearTimeout);timers=[];
+    btn.disabled=true;
+    rows.forEach(function(r){r.classList.add('pending');var s=r.querySelector('.qstate');s.classList.remove('done');s.textContent=''});
+    count.textContent='0 open';
+    var delay=400;
+    rows.forEach(function(r,i){
+      var s=r.querySelector('.qstate'),final=r.getAttribute('data-state'),last=i===rows.length-1,t0=delay;
+      at(t0,function(){r.classList.remove('pending');s.textContent='New';count.textContent=(i+1)+' open'});
+      if(!last){
+        at(t0+700,function(){s.textContent='Investigating'});
+        at(t0+1500,function(){s.textContent=final;s.classList.add('done');count.textContent=(rows.length-1-i)+' open'});
+        delay+=1100;
+      }else{
+        at(t0+600,function(){s.textContent=final;s.classList.add('done');count.textContent='1 open';btn.disabled=false});
+      }
+    });
+  }
+  btn.addEventListener('click',play);
+  play();
+})();
+
+// highlights and testimonials stay hidden until you add real entries here
+var HIGHLIGHTS=[
+  // {value:'0', label:'what this number counts'},
+];
+var TESTIMONIALS=[
+  // {quote:'What they said about working with you.', name:'Full name', role:'Role, Company'},
+];
+(function(){
+  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+  if(HIGHLIGHTS.length){
+    var hl=document.getElementById('hl');
+    HIGHLIGHTS.forEach(function(h){var d=el('div');d.appendChild(el('b','',h.value));d.appendChild(el('span','',h.label));hl.appendChild(d)});
+    document.getElementById('highlights').hidden=false;
+  }
+  if(TESTIMONIALS.length){
+    var q=document.getElementById('quotes');
+    TESTIMONIALS.forEach(function(t){var b=el('blockquote');b.appendChild(el('p','',t.quote));b.appendChild(el('cite','',t.name+', '+t.role));q.appendChild(b)});
+    document.getElementById('testimonials').hidden=false;
+  }
+})();
+
+// certification filter
+(function(){
+  var btns=document.querySelectorAll('.cfilters button'),cards=[].slice.call(document.querySelectorAll('.cert')),out=document.getElementById('ccount');
+  btns.forEach(function(b){b.addEventListener('click',function(){
+    var f=b.dataset.f,n=0;
+    btns.forEach(function(x){x.setAttribute('aria-pressed',x===b)});
+    cards.forEach(function(c){var on=f==='all'||c.dataset.area===f;c.classList.toggle('dim',!on);c.setAttribute('aria-hidden',!on);if(on)n++});
+    out.textContent=f==='all'?cards.length+' credentials':n+' of '+cards.length+' credentials';
+  })});
+})();
+
+// globe background (original, in the palette): a slowly turning globe of lights with connection arcs over it
+(function(){
+  var cv=document.getElementById('bg');if(!cv||!cv.getContext)return;
+  var ctx=cv.getContext('2d'),root=document.documentElement,reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W,H,dpr,last=0,T=0,TILT=.42,PI=Math.PI;
+  function rnd(a,b){return a+Math.random()*(b-a)}
+  function gauss(){return (Math.random()+Math.random()+Math.random()-1.5)/1.5}
+  function vec(lat,lon){return [Math.cos(lat)*Math.sin(lon),Math.sin(lat),Math.cos(lat)*Math.cos(lon)]}
+  // model: clusters of lights standing in for land, a thin scatter standing in for sea
+  var dots=[],cities=[],arcs=[],blobs=[],i;
+  for(i=0;i<15;i++)blobs.push({lat:rnd(-.9,1.15),lon:rnd(-PI,PI),sp:rnd(.14,.36)});
+  for(i=0;i<2600;i++){var b=blobs[i%blobs.length],la=b.lat+gauss()*b.sp*.8,lo=b.lon+gauss()*b.sp/Math.max(.35,Math.cos(b.lat));
+    la=Math.max(-1.45,Math.min(1.45,la));dots.push({v:vec(la,lo),a:rnd(.4,1),s:rnd(1,2.2)})}
+  for(i=0;i<420;i++){var u=rnd(-1,1),lo2=rnd(-PI,PI);dots.push({v:vec(Math.asin(u),lo2),a:rnd(.1,.25),s:1})}
+  for(i=0;i<46;i++){var d=dots[Math.floor(Math.random()*2600)];cities.push({v:d.v,ph:rnd(0,6.28)})}
+  for(i=0;i<20;i++){
+    var A=cities[Math.floor(Math.random()*cities.length)].v,B=cities[Math.floor(Math.random()*cities.length)].v;
+    var dot=A[0]*B[0]+A[1]*B[1]+A[2]*B[2],om=Math.acos(Math.max(-.999,Math.min(.999,dot)));
+    if(om<.5||om>2.3){i--;continue}
+    arcs.push({A:A,B:B,om:om,sp:rnd(.07,.16),off:rnd(0,1),h:Math.min(.38,.1+om*.1)});
+  }
+  function resize(){
+    dpr=Math.min(devicePixelRatio||1,1.5);W=innerWidth;H=innerHeight;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function rot(v,ang){
+    var c=Math.cos(ang),s=Math.sin(ang),x=v[0]*c+v[2]*s,z=-v[0]*s+v[2]*c,ct=Math.cos(TILT),st=Math.sin(TILT);
+    return [x,v[1]*ct-z*st,v[1]*st+z*ct];
+  }
+  function arcPoint(a,t){
+    var so=Math.sin(a.om),s1=Math.sin((1-t)*a.om)/so,s2=Math.sin(t*a.om)/so,r=1+Math.sin(t*PI)*a.h;
+    return [(a.A[0]*s1+a.B[0]*s2)*r,(a.A[1]*s1+a.B[1]*s2)*r,(a.A[2]*s1+a.B[2]*s2)*r];
+  }
+  function draw(dt){
+    T+=dt;
+    var night=root.getAttribute('data-theme')==='dark',sy=Math.min(scrollY,4000);
+    var GLOW=night?'48,140,255':'16,92,186',CORE=night?'196,228,255':'8,66,150',amax=night?1:.62;
+    var narrow=W<760,R=narrow?W*.78:Math.min(W*.4,H*.66);
+    var cx=narrow?W*.5:W*.7,cy=(narrow?H*.66:H*.54)-Math.min(sy,H*1.2)*.12;
+    var fade=Math.max(.45,1-sy/(H*2.2))*(narrow?.6:1);            // calmer once you leave the hero
+    var ang=T*.06+sy*.0005;
+    ctx.clearRect(0,0,W,H);
+    // atmosphere and the dark body of the planet
+    var g=ctx.createRadialGradient(cx,cy,R*.92,cx,cy,R*1.32);
+    g.addColorStop(0,'rgba('+GLOW+','+(.30*amax*fade).toFixed(3)+')');g.addColorStop(1,'rgba('+GLOW+',0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R*1.32,0,6.2832);ctx.fill();
+    var body=ctx.createRadialGradient(cx-R*.3,cy-R*.35,R*.1,cx,cy,R);
+    body.addColorStop(0,night?'rgba(17,45,86,'+(.55*fade).toFixed(3)+')':'rgba(255,255,255,'+(.35*fade).toFixed(3)+')');
+    body.addColorStop(1,night?'rgba(6,20,27,'+(.7*fade).toFixed(3)+')':'rgba(155,168,171,'+(.22*fade).toFixed(3)+')');
+    ctx.fillStyle=body;ctx.beginPath();ctx.arc(cx,cy,R,0,6.2832);ctx.fill();
+    // faint graticule
+    ctx.lineWidth=.6;ctx.strokeStyle='rgba('+GLOW+','+(.14*amax*fade).toFixed(3)+')';
+    for(var lg=0;lg<12;lg++){ctx.beginPath();var on=false;
+      for(var lt=-84;lt<=84;lt+=6){var gp=rot(vec(lt*PI/180,lg*PI/6),ang);if(gp[2]<0){on=false;continue}
+        var gx=cx+gp[0]*R,gy=cy-gp[1]*R;if(!on){ctx.moveTo(gx,gy);on=true}else ctx.lineTo(gx,gy)}ctx.stroke()}
+    for(var pl=-60;pl<=60;pl+=30){ctx.beginPath();var on2=false;
+      for(var lo3=0;lo3<=360;lo3+=6){var pp=rot(vec(pl*PI/180,lo3*PI/180),ang);if(pp[2]<0){on2=false;continue}
+        var px=cx+pp[0]*R,py=cy-pp[1]*R;if(!on2){ctx.moveTo(px,py);on2=true}else ctx.lineTo(px,py)}ctx.stroke()}
+    ctx.lineWidth=1;
+    // lights
+    for(var k=0;k<dots.length;k++){
+      var d=dots[k],p=rot(d.v,ang);if(p[2]<=0)continue;
+      var al=Math.min(1,d.a*(.3+.9*p[2])*1.25)*amax*fade;
+      ctx.fillStyle='rgba('+(p[2]>.55&&d.a>.6?CORE:GLOW)+','+al.toFixed(3)+')';
+      var sz=d.s*(.8+.7*p[2]);ctx.fillRect(cx+p[0]*R,cy-p[1]*R,sz,sz);
+    }
+    // arcs and the pulses travelling along them
+    ctx.lineWidth=1;
+    for(var q=0;q<arcs.length;q++){
+      var a=arcs[q],N=26,pen=false,prev=null;
+      ctx.beginPath();
+      for(var n=0;n<=N;n++){
+        var r=rot(arcPoint(a,n/N),ang);
+        if(r[2]<-.05){pen=false;continue}
+        var x=cx+r[0]*R,y=cy-r[1]*R;
+        if(!pen){ctx.moveTo(x,y);pen=true}else ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle='rgba('+GLOW+','+(.22*amax*fade).toFixed(3)+')';ctx.stroke();
+      var tp=(T*a.sp+a.off)%1;
+      for(var tr=0;tr<7;tr++){
+        var tt=tp-tr*.012;if(tt<0)continue;
+        var rp=rot(arcPoint(a,tt),ang);if(rp[2]<=0)continue;
+        var ta=(1-tr/7)*.95*amax*fade;
+        ctx.fillStyle='rgba('+CORE+','+ta.toFixed(3)+')';
+        var rr=tr===0?2.4:1.5;ctx.beginPath();ctx.arc(cx+rp[0]*R,cy-rp[1]*R,rr,0,6.2832);ctx.fill();
+      }
+    }
+    // city lights, breathing
+    for(var c=0;c<cities.length;c++){
+      var cp=rot(cities[c].v,ang);if(cp[2]<=.05)continue;
+      var br=.6+.4*Math.sin(T*1.4+cities[c].ph),x2=cx+cp[0]*R,y2=cy-cp[1]*R;
+      var gl=ctx.createRadialGradient(x2,y2,0,x2,y2,9);
+      gl.addColorStop(0,'rgba('+CORE+','+(.8*br*cp[2]*amax*fade).toFixed(3)+')');gl.addColorStop(1,'rgba('+GLOW+',0)');
+      ctx.fillStyle=gl;ctx.fillRect(x2-9,y2-9,18,18);
+    }
+  }
+  function frame(t){
+    var dt=Math.min(.05,(t-last)/1000||.016);last=t;
+    if(!document.hidden)draw(dt);
+    requestAnimationFrame(frame);
+  }
+  addEventListener('resize',function(){resize();if(reduce)draw(.016)});
+  resize();
+  if(reduce){draw(.016);return}
+  requestAnimationFrame(frame);
+})();
+
+// scroll motion, after pryzm.design: smooth scroll, parallax, and text that brightens as it scrolls up
+(function(){
+  var root=document.documentElement,bar=document.querySelector('.bar'),motion=root.classList.contains('js'),lenis=null;
+  function clamp(v){return v<0?0:v>1?1:v}
+  var items=[];
+  if(motion){
+    var sels=['section h2','.about-grid > div > p','.portrait','.ledger .row','.caps .cap','.tools-block h3','.stack > div','.cfilters','.ccount','.cgrid .cert','.hl > div','.quotes blockquote','.contact-grid > *','.mail'];
+    sels.forEach(function(sel){
+      [].forEach.call(document.querySelectorAll(sel),function(el,i){el.classList.add('sc');items.push({el:el,off:(i%4)*22,p:-1})});
+    });
+  }
+  var pending=false;
+  function update(){
+    pending=false;
+    var y=scrollY,vh=innerHeight,h=root.scrollHeight-vh,atEnd=y+vh>=root.scrollHeight-4;
+    root.style.setProperty('--sy',y.toFixed(1));
+    bar.style.setProperty('--p',h>0?Math.min(1,y/h):0);
+    items.forEach(function(it){
+      var top=it.el.getBoundingClientRect().top-(it.p>=0?(1-it.p)*26:0)+it.off;
+      var p=atEnd||top<vh*.64?1:top>vh*1.02?0:clamp((vh*.96-top)/(vh*.32));
+      p=Math.round(p*200)/200;
+      if(p!==it.p){it.p=p;it.el.style.setProperty('--p',p)}
+    });
+  }
+  function ask(){if(pending)return;pending=true;if(document.hidden)setTimeout(update,30);else requestAnimationFrame(update)}
+  addEventListener('scroll',ask,{passive:true});addEventListener('resize',ask);addEventListener('load',ask);
+  update();
+
+  // smooth, inertial scrolling with Lenis when it loaded and motion is allowed
+  function startLenis(){
+    if(!motion||!window.Lenis)return;
+    lenis=new Lenis({lerp:.09});
+    (function raf(t){lenis.raf(t);requestAnimationFrame(raf)})(performance.now());
+    window.__lenis=lenis;
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',startLenis);else startLenis();
+  // in-page links glide to their section
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href^="#"]');
+    if(!a||!lenis)return;
+    var id=a.getAttribute('href').slice(1),t=id?document.getElementById(id):document.body;
+    if(!t)return;
+    e.preventDefault();lenis.scrollTo(id?t:0,{offset:id?-56:0});
+  });
+  window.__scrollTop=function(){if(lenis)lenis.scrollTo(0);else scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})};
+})();
+
+// nav highlight, back to top, print with every section open
+(function(){
+  var links={};[].forEach.call(document.querySelectorAll('.bar nav a'),function(a){links[a.getAttribute('href').slice(1)]=a});
+  var secs=[].slice.call(document.querySelectorAll('section[id]')).filter(function(x){return links[x.id]});
+  function mark(){
+    var line=innerHeight*.4,cur=null;
+    secs.forEach(function(x){var r=x.getBoundingClientRect();if(r.top<=line&&r.bottom>line)cur=x.id});
+    Object.keys(links).forEach(function(k){if(k===cur)links[k].setAttribute('aria-current','true');else links[k].removeAttribute('aria-current')});
+  }
+  var mt=false;
+  addEventListener('scroll',function(){if(!mt){mt=true;setTimeout(function(){mt=false;mark()},40)}},{passive:true});
+  addEventListener('resize',mark);mark();
+  // mobile menu
+  var barEl=document.querySelector('.bar'),mbtn=document.getElementById('menuBtn');
+  function setMenu(open){barEl.classList.toggle('open',open);mbtn.setAttribute('aria-expanded',String(open));mbtn.setAttribute('aria-label',open?'Close menu':'Menu')}
+  mbtn.addEventListener('click',function(e){e.stopPropagation();setMenu(!barEl.classList.contains('open'))});
+  document.getElementById('links').addEventListener('click',function(e){if(e.target.closest('a'))setMenu(false)});
+  document.addEventListener('click',function(e){if(!barEl.contains(e.target))setMenu(false)});
+  addEventListener('keydown',function(e){if(e.key==='Escape'&&barEl.classList.contains('open')){setMenu(false);mbtn.focus()}});
+  addEventListener('resize',function(){if(innerWidth>700)setMenu(false)});
+  var top=document.getElementById('totop');
+  addEventListener('scroll',function(){top.classList.toggle('show',scrollY>700)},{passive:true});
+  top.addEventListener('click',function(){window.__scrollTop()});
+  addEventListener('beforeprint',function(){document.querySelectorAll('details').forEach(function(d){d.open=true})});
+})();
+
+// contact form: Netlify when hosted there, otherwise open the email app
+(function(){
+  var f=document.getElementById('cform'),note=document.getElementById('fnote');
+  // Using a custom domain on Netlify? Change this to true.
+  var USE_NETLIFY=/netlify\.app$/.test(location.hostname);
+  if(location.search.indexOf('thanks=1')>-1)note.textContent='Message sent. Thank you.';
+  f.addEventListener('submit',function(e){
+    if(USE_NETLIFY)return;
+    e.preventDefault();
+    var d=new FormData(f);
+    var body=d.get('message')+'\n\n'+d.get('name')+' ('+d.get('email')+')';
+    location.href='mailto:osamaabdelazim10120@gmail.com?subject='+encodeURIComponent('Portfolio message from '+d.get('name'))+'&body='+encodeURIComponent(body);
+    note.textContent='Opening your email app.';
+  });
+})();
+document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
